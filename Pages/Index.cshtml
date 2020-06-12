@@ -1,0 +1,70 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@section Style
+{
+    <link href="~/css/rooster.css" rel="stylesheet" />
+}
+<div>
+    <h1 class="text-center display-4">Welcome</h1>
+    <p class="text-center">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+        <form method="post">
+            @*<div class="row">
+                    <textarea id="tinmc" name="">
+                    </textarea>
+                </div>*@
+            <div class="row">
+                <div id="editorDiv" name="editorDiv" tabindex="0" class="lean-rooster rooster-editor" 
+                     role="textbox" style="width: 500px; height: 300px; overflow: auto; border: solid 1px black" dir="ltr" contenteditable="true" aria-label="Discussion" aria-multiline="true" 
+                     data-placeholder="Add a description">
+
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <button id="bold"><b>B</b></button>
+                    <button id="italic"><i>I</i></button>
+                    <button id="underline"><u>U</u></button>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary mt-3"  id="send">Submit</button>
+            </div>
+            <input type="hidden" id="description" name="description" value="@Model.DescriptionContent" />
+        </form>
+    </div>
+</div>
+<script src="~/lib/rooster.js"></script>
+<script>
+    //tinymce.init({
+    //    selector: 'textarea'
+    //});
+
+    $(function () {
+        const contentDiv = document.getElementById("editorDiv");
+        var editor = roosterjs.createEditor(contentDiv);
+        editor.setContent($("#description").val());
+        $("form").submit(function (e) {
+            const content = editor.getContent();
+            $("#description").val(content);
+            console.log(content);
+            return true;
+        });
+        document.getElementById('bold').addEventListener('click', function (e) {
+            e.preventDefault();
+            roosterjs.toggleBold(editor);
+        });
+        document.getElementById('italic').addEventListener('click', function (e) {
+            e.preventDefault();
+            roosterjs.toggleItalic(editor);
+        });
+        document.getElementById('underline').addEventListener('click', function (e) {
+            e.preventDefault();
+            roosterjs.toggleUnderline(editor);
+        });
+
+    });
+</script>

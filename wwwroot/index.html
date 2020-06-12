@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test Rooster</title>
+
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="css/ribbon.css" rel="stylesheet" />
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="js/knockout.debug.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
+</head>
+
+<body class="fixed-sn white-skin" aria-busy="true" style="cursor: default;" data-offset="120" data-target=".sticky"
+  data-spy="scroll">
+  <div class="side-nav-margin client-logo-margin" id="main-content">
+    <div class="mt-3 mb-5 mb-lg-3 pb-5">
+      <div class="container mb-lg-1 pb-4">
+        <div class="row">
+          <div class="container" id="client-info" data-bind="visible: true">
+            <div class="row pb-3">
+              <div class="col-12">
+                <div class="card card-cascade narrower">
+                  <div class="card-body px-lg-5 pt-0">
+                    <div class="md-form">
+                      <div class="form-row">
+                        <section class="col-12 py-3">
+                          <div class="tab-content card pt-3">
+                            <div class="tab-pane fade active show" id="location-pane" role="tabpanel"
+                              aria-labelledby="location-tab">
+                              <div class="form-row">
+                                <div class="col-12 pt-1">
+                                  <button type="button" class="btn btn-sm" id="editText" data-toggle="modal"
+                                    data-target="#formatTexteModal">Edit</button>
+                                  <textarea class="md-textarea form-control" id="source"
+                                    placeholder="Location Lookup Instructions" rows="3" type="text"
+                                    data-bind="value: JurisClient.LocationInstruction, attr: { disabled: $parent.inputDisabled()}">What is needed:
+We need the ability to format text in the areas of 
+Select Intake Greeting, Location Lookup Instructions, 
+Employee Lookup Instructions, and Vehicle Lookup Instructions. 
+At a minimum, the following formatting options are needed: Bold, Font Size, Underline, and Break (going to the next line using the enter key).
+
+It would be ideal to have a formatting tool, such as the mockup below, but we can also use the same formatting techniques that are available to us in View Logic.</textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="modal fade" id="formatTexteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Enter an Format text</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="editorDiv" name="editorDiv"
+              style="width: 100%; height: 600px; overflow: auto; border: solid 1px black" tabindex="0"
+              class="lean-rooster rooster-editor" role="textbox" contenteditable="true" aria-label="Discussion"
+              aria-multiline="true" data-placeholder="Add a description">
+            </div>
+            <div class="ribbon">
+              <button class="button" id="bold" title="Toggle Bold"><img src="./svg/bold.svg" /></button>
+              <button class="button" id="italic" title="Toggle Italic"><img src="./svg/italic.svg" /></button>
+              <button class="button" id="underline" title="Toggle Underline"><img src="./svg/underline.svg" /></button>
+              <button class="button" id="font_size" title="Toggle Font Size"><img src="./svg/fontsize.svg" /></button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary" id="saveButton" >Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<script src="js/rooster.js"></script>
+<script>
+$(function () {
+  const currentVal = $("#source");
+  const contentDiv = document.getElementById("editorDiv");
+  var editor = roosterjs.createEditor(contentDiv, null, currentVal.val());
+
+  $('#exampleModal').on('show.bs.modal', function (event) {
+  });  
+  document.getElementById('bold').addEventListener('click', function (e) {
+    e.preventDefault();
+    roosterjs.toggleBold(editor);
+  });
+  document.getElementById('italic').addEventListener('click', function (e) {
+    e.preventDefault();
+    roosterjs.toggleItalic(editor);
+  });
+  document.getElementById('underline').addEventListener('click', function (e) {
+    e.preventDefault();
+    roosterjs.toggleUnderline(editor);
+  });
+
+  document.getElementById('saveButton').addEventListener('click', function (e) {
+    e.preventDefault();
+    currentVal.val(editor.getContent());
+    $("#formatTexteModal").modal('hide');
+  });
+});
+</script>
+</body>
+</html>

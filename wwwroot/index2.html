@@ -1,0 +1,28 @@
+﻿<html>
+<head>
+    <title>Knockout Test</title>
+</head>
+<body>
+
+<div data-bind="component: 'view-count'"></div>
+
+<script type="text/javascript" src="js/knockout.debug.js"></script>
+<script type="text/javascript">
+    var myDataModel = function () {
+        var self = this;
+
+        self.viewCount = ko.observable(1);
+        self.clickView = function () {
+            var currCount = self.viewCount();
+            self.viewCount(currCount + 3);
+        };
+    };
+
+    ko.components.register('view-count', {
+        viewModel: myDataModel,
+        template: "<p data-bind='text: viewCount'></p><button data-bind='click: clickView'>test</button>"
+    });
+    ko.applyBindings();
+</script>
+</body>
+</html>
